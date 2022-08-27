@@ -1,0 +1,187 @@
+-- Database: manomultimarcas
+
+-- DROP DATABASE manomultimarcas;
+
+CREATE DATABASE manomultimarcas
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+----------------------------------------------------------
+-- Table: public.acesso
+
+-- DROP TABLE public.acesso;
+
+CREATE TABLE IF NOT EXISTS public.acesso
+(
+    id bigint NOT NULL,
+    descricao character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT acesso_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.acesso
+    OWNER to postgres;
+	
+----------------------------------------------------------	
+-- Table: public.categoria_produto
+
+-- DROP TABLE public.categoria_produto;
+
+CREATE TABLE IF NOT EXISTS public.categoria_produto
+(
+    id bigint NOT NULL,
+    descricao_categoria character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT categoria_produto_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.categoria_produto
+    OWNER to postgres;
+----------------------------------------------------------
+-- Table: public.endereco
+
+-- DROP TABLE public.endereco;
+
+CREATE TABLE IF NOT EXISTS public.endereco
+(
+    id bigint NOT NULL,
+    bairro character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    cep character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    cidade character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    complemento character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    logradouro character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    numero character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    tipo_endereco character varying(255) COLLATE pg_catalog."default",
+    uf character varying(255) COLLATE pg_catalog."default",
+    pessoaid bigint NOT NULL,
+    CONSTRAINT endereco_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.endereco
+    OWNER to postgres;
+----------------------------------------------------------
+-- Table: public.marca_produto
+
+-- DROP TABLE public.marca_produto;
+
+CREATE TABLE IF NOT EXISTS public.marca_produto
+(
+    id bigint NOT NULL,
+    descricao_marca character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT marca_produto_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.marca_produto
+    OWNER to postgres;
+----------------------------------------------------------
+-- Table: public.pessoa_fisica
+
+-- DROP TABLE public.pessoa_fisica;
+
+CREATE TABLE IF NOT EXISTS public.pessoa_fisica
+(
+    id bigint NOT NULL,
+    email character varying(255) COLLATE pg_catalog."default",
+    nome character varying(255) COLLATE pg_catalog."default",
+    telefone character varying(255) COLLATE pg_catalog."default",
+    cpf character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    data_nascimento date,
+    CONSTRAINT pessoa_fisica_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.pessoa_fisica
+    OWNER to postgres;
+----------------------------------------------------------
+-- Table: public.pessoa_juridica
+
+-- DROP TABLE public.pessoa_juridica;
+
+CREATE TABLE IF NOT EXISTS public.pessoa_juridica
+(
+    id bigint NOT NULL,
+    email character varying(255) COLLATE pg_catalog."default",
+    nome character varying(255) COLLATE pg_catalog."default",
+    telefone character varying(255) COLLATE pg_catalog."default",
+    categoria character varying(255) COLLATE pg_catalog."default",
+    cnpj character varying(255) COLLATE pg_catalog."default",
+    insc_estadual character varying(255) COLLATE pg_catalog."default",
+    insc_munincipal character varying(255) COLLATE pg_catalog."default",
+    nome_fantasia character varying(255) COLLATE pg_catalog."default",
+    razao_social character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT pessoa_juridica_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.pessoa_juridica
+    OWNER to postgres;
+----------------------------------------------------------
+- Table: public.usuario
+-- DROP TABLE public.usuario;
+
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    id bigint NOT NULL,
+    data_atual_senha date,
+    login character varying(255) COLLATE pg_catalog."default",
+    senha character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT usuario_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuario
+    OWNER to postgres;
+----------------------------------------------------------	
+-- Table: public.usuario_acesso
+
+-- DROP TABLE public.usuario_acesso;
+
+CREATE TABLE IF NOT EXISTS public.usuario_acesso
+(
+    usuarioid bigint NOT NULL,
+    acessoid bigint NOT NULL,
+    CONSTRAINT uk_kfpl2gajok99agpt6eejiafsx UNIQUE (acessoid),
+    CONSTRAINT uniqueacessouser UNIQUE (usuarioid, acessoid),
+    CONSTRAINT acessofk FOREIGN KEY (acessoid)
+        REFERENCES public.acesso (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT usuariofk FOREIGN KEY (usuarioid)
+        REFERENCES public.usuario (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuario_acesso
+    OWNER to postgres;
