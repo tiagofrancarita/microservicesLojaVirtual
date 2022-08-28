@@ -1,13 +1,12 @@
 package br.com.manomultimarcas.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Range;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -87,6 +86,18 @@ public class VendaCompraLojaVirtual implements Serializable {
     @JoinColumn(name = "empresaid", nullable = false,
             foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresaidFK"))
     private PessoaJuridica empresa;
+
+
+    @OneToMany(mappedBy ="vendacompralojavirtual" ,orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ItemVendaLoja> itemVendaLojas = new ArrayList<ItemVendaLoja>();
+
+    public List<ItemVendaLoja> getItemVendaLojas() {
+        return itemVendaLojas;
+    }
+
+    public void setItemVendaLojas(List<ItemVendaLoja> itemVendaLojas) {
+        this.itemVendaLojas = itemVendaLojas;
+    }
 
     public PessoaJuridica getEmpresa() {
 
