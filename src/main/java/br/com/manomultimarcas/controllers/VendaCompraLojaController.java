@@ -136,6 +136,7 @@ public class VendaCompraLojaController {
 				compraLojaVirtualDTO.getItemVendaLoja().add(itemVendaDTO);
 			}
 
+
 			return new ResponseEntity<VendaCompraLojaVirtualDTO>(compraLojaVirtualDTO, HttpStatus.OK);
 		}
 }
