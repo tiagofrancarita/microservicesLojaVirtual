@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: br.com.manomultimarcas.LojaVirtualManosMultimarcasApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 10.199 s <<< FAILURE! - in br.com.manomultimarcas.LojaVirtualManosMultimarcasApplicationTests
+testRestApiObterAcessoDescricao  Time elapsed: 0.101 s  <<< FAILURE!
+junit.framework.AssertionFailedError: expected:<1> but was:<5>
+	at br.com.manomultimarcas.LojaVirtualManosMultimarcasApplicationTests.testRestApiObterAcessoDescricao(LojaVirtualManosMultimarcasApplicationTests.java:188)
+
+testRestApiObterAcessoId  Time elapsed: 0.021 s  <<< ERROR!
+java.lang.IllegalArgumentException: Not enough variable values available to expand 'id'
+	at br.com.manomultimarcas.LojaVirtualManosMultimarcasApplicationTests.testRestApiObterAcessoId(LojaVirtualManosMultimarcasApplicationTests.java:147)
+
