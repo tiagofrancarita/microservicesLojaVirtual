@@ -2,14 +2,11 @@ package br.com.manomultimarcas.controllers;
 
 import javax.validation.Valid;
 
-import br.com.manomultimarcas.model.Endereco;
-import br.com.manomultimarcas.model.ItemVendaLoja;
-import br.com.manomultimarcas.model.PessoaFisica;
+import br.com.manomultimarcas.model.*;
 import br.com.manomultimarcas.model.dto.ItemVendaDTO;
 import br.com.manomultimarcas.model.dto.VendaCompraLojaVirtualDTO;
-import br.com.manomultimarcas.repository.EnderecoRepository;
-import br.com.manomultimarcas.repository.NotaFiscalVendaRepository;
-import br.com.manomultimarcas.repository.PessoaFisicaRepository;
+import br.com.manomultimarcas.repository.*;
+import br.com.manomultimarcas.services.VendaService;
 import br.com.manomultimarcas.util.ExceptionLojaVirtual;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import br.com.manomultimarcas.model.VendaCompraLojaVirtual;
-import br.com.manomultimarcas.repository.VendaCompraLojaVirtualRepository;
 
 @RestController
 public class VendaCompraLojaController {
@@ -28,6 +23,9 @@ public class VendaCompraLojaController {
 	public final static String VENDA_INICIO = "O Fluxo de venda foi iniciado com sucesso.";
 	public final static String VENDA_FINALIZADA_SUCESSO = "O Fluxo de venda foi finalizado com sucesso.";
 	public final static String VENDA_FINALIZADA_ERRO = "O Fluxo venda encerrado com erro.";
+	public final static String FLUXO_CRIACAO_STATUS_RASTREIO_INICIO = "Criação do status rastreio iniciada";
+	public final static String FLUXO_CRIACAO_STATUS_RASTREIO_FINALIZACAO_SUCESSO = "Criação do status rastreio finalizada com sucesso";
+	public final static String FLUXO_CRIACAO_STATUS_RASTREIO_FINALIZACAO_ERRO = "Criação do status rastreio finalizada com erro";
 
 	@Autowired
 	private VendaCompraLojaVirtualRepository vendaCompraLojaVirtualRepository;
@@ -40,6 +38,12 @@ public class VendaCompraLojaController {
 
 	@Autowired
 	private NotaFiscalVendaRepository notaFiscalVendaRepository;
+
+	@Autowired
+	private StatusRastreioRepository statusRastreioRepository;
+
+	@Autowired
+	private VendaService vendaService;
 
 	
 	@ResponseBody
@@ -71,10 +75,20 @@ public class VendaCompraLojaController {
 
 			}
 
-
-
-			// Salva primeiro a venda
+			// Salva a venda e todos os seus dados no banco.
 			vendaCompraLojaVirtual = vendaCompraLojaVirtualRepository.saveAndFlush(vendaCompraLojaVirtual);
+
+			//Criacao do status rastreio.
+			StatusRastreio statusRastreio = new StatusRastreio();
+			statusRastreio.setCentroDistribuicao("CP-Rio de Janeiro");
+			statusRastreio.setCidade("Rio de Janeiro");
+			statusRastreio.setEstado("Rio de Janeiro");
+			statusRastreio.setEmpresa(vendaCompraLojaVirtual.getEmpresa());
+			statusRastreio.setStatus("Em Separação");
+			statusRastreio.setVendacompralojavirtual(vendaCompraLojaVirtual);
+
+			// Finalização status reastreio
+			statusRastreioRepository.save(statusRastreio);
 
 			//Faz a associação da venda com a nota fiscal
 			vendaCompraLojaVirtual.getNotaFiscalVenda().setVendacompralojavirtual(vendaCompraLojaVirtual);
@@ -136,7 +150,18 @@ public class VendaCompraLojaController {
 				compraLojaVirtualDTO.getItemVendaLoja().add(itemVendaDTO);
 			}
 
-
 			return new ResponseEntity<VendaCompraLojaVirtualDTO>(compraLojaVirtualDTO, HttpStatus.OK);
+		}
+
+		@ResponseBody
+		@DeleteMapping(value = "**/deletaTotalVenda/{idVenda}")
+		public ResponseEntity<String> deletaTotalVenda(@PathVariable(value = "idVenda") Long idVenda){
+
+				vendaService.deletaTotalVenda(idVenda);
+
+			//vendaCompraLojaVirtualRepository.deletaVendaTotal(idVenda);
+
+			return new ResponseEntity<String>("Venda excluída com sucesso.", HttpStatus.OK);
+
 		}
 }

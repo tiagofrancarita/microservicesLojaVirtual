@@ -1,9 +1,6 @@
 package br.com.manomultimarcas.model.dto;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import java.io.Serializable;
 
 public class ImagemProdutoDTO implements Serializable {
