@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="392a8cdb-75f2-43a6-b1f9-493b13d13fa4" name="Changes" comment="Fluxo de vendas parte I">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/StatusRastreioRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/services/VendaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/controllers/VendaCompraLojaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/controllers/VendaCompraLojaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/dto/ImagemProdutoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/dto/ImagemProdutoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/VendaCompraLojaVirtualRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/VendaCompraLojaVirtualRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661653528484</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fluxo de vendas parte I">
+      <created>1661654063474</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1661654063474</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
