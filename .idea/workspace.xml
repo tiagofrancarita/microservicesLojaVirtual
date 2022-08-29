@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="392a8cdb-75f2-43a6-b1f9-493b13d13fa4" name="Changes" comment="Fluxo de vendas parte I">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/StatusRastreioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/services/VendaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/controllers/VendaCompraLojaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/controllers/VendaCompraLojaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/dto/ImagemProdutoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/dto/ImagemProdutoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/VendaCompraLojaVirtual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/model/VendaCompraLojaVirtual.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/VendaCompraLojaVirtualRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/repository/VendaCompraLojaVirtualRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/services/VendaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/manomultimarcas/services/VendaService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +50,8 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="development" />
-                    <option name="lastUsedInstant" value="1661620263" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1661720413" />
                   </RecentBranch>
                 </list>
               </option>
