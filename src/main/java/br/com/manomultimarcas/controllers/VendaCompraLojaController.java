@@ -15,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class VendaCompraLojaController {
 
@@ -126,7 +129,12 @@ public class VendaCompraLojaController {
 		@GetMapping(value = "**/consultaVendaId/{idVenda}")
 		public ResponseEntity<VendaCompraLojaVirtualDTO> consultaVendaId(@PathVariable("idVenda")Long idVenda){
 
-			VendaCompraLojaVirtual compraLojaVirtual = vendaCompraLojaVirtualRepository.findById(idVenda).orElse(new VendaCompraLojaVirtual());
+			VendaCompraLojaVirtual compraLojaVirtual = vendaCompraLojaVirtualRepository.findByIdExclusao(idVenda);
+
+			if (compraLojaVirtual == null){
+
+				compraLojaVirtual = new VendaCompraLojaVirtual();
+			}
 
 			VendaCompraLojaVirtualDTO compraLojaVirtualDTO = new VendaCompraLojaVirtualDTO();
 
@@ -157,11 +165,63 @@ public class VendaCompraLojaController {
 		@DeleteMapping(value = "**/deletaTotalVenda/{idVenda}")
 		public ResponseEntity<String> deletaTotalVenda(@PathVariable(value = "idVenda") Long idVenda){
 
-				vendaService.deletaTotalVenda(idVenda);
-
-			//vendaCompraLojaVirtualRepository.deletaVendaTotal(idVenda);
+			vendaService.deletaTotalVenda(idVenda);
 
 			return new ResponseEntity<String>("Venda excluída com sucesso.", HttpStatus.OK);
 
 		}
+	@ResponseBody
+	@DeleteMapping(value = "**/deletaLogicaTotalVenda/{idVenda}")
+	public ResponseEntity<String> exclusaoVendaLogica(@PathVariable(value = "idVenda") Long idVenda){
+
+		vendaService.exclusaoLogicaVenda(idVenda);
+
+		return new ResponseEntity<String>("Venda excluída com sucesso.", HttpStatus.OK);
+
+	}
+
+
+	@ResponseBody
+	@GetMapping(value = "**/consultaVendaPorProdutoId/{idProduto}")
+	public ResponseEntity<List<VendaCompraLojaVirtualDTO>> consultaVendaPorProdutoId(@PathVariable("idProduto")Long idProduto){
+
+		List<VendaCompraLojaVirtual> compraLojaVirtual = vendaCompraLojaVirtualRepository.vendaPorProduto(idProduto);
+
+		if (compraLojaVirtual == null){
+
+			compraLojaVirtual = new ArrayList<VendaCompraLojaVirtual>();
+		}
+
+		List<VendaCompraLojaVirtualDTO> compraLojaVirtualDTOList = new ArrayList<VendaCompraLojaVirtualDTO>();
+
+		for (VendaCompraLojaVirtual vendaCompraLojaVirtual : compraLojaVirtual) {
+
+			VendaCompraLojaVirtualDTO compraLojaVirtualDTO = new VendaCompraLojaVirtualDTO();
+
+			compraLojaVirtualDTO.setId(vendaCompraLojaVirtual.getId());
+
+			compraLojaVirtualDTO.setValorTotal(vendaCompraLojaVirtual.getValorTotal());
+			compraLojaVirtualDTO.setPessoa(vendaCompraLojaVirtual.getPessoa());
+
+			compraLojaVirtualDTO.setEnderecoEntrega(vendaCompraLojaVirtual.getEnderecoEntrega());
+			compraLojaVirtualDTO.setEnderecoCobranca(vendaCompraLojaVirtual.getEnderecoCobranca());
+
+			compraLojaVirtualDTO.setValorDesconto(vendaCompraLojaVirtual.getValorDesconto());
+			compraLojaVirtualDTO.setValorFrete(vendaCompraLojaVirtual.getValorFrete());
+
+			for (ItemVendaLoja item : vendaCompraLojaVirtual.getItemVendaLojas()) {
+
+				ItemVendaDTO itemVendaDTO = new ItemVendaDTO();
+				itemVendaDTO.setQuantidade(item.getQuantidade());
+				itemVendaDTO.setProduto(item.getProduto());
+
+				compraLojaVirtualDTO.getItemVendaLoja().add(itemVendaDTO);
+			}
+
+			compraLojaVirtualDTOList.add(compraLojaVirtualDTO);
+
+		}
+
+		return new ResponseEntity<List<VendaCompraLojaVirtualDTO>>(compraLojaVirtualDTOList, HttpStatus.OK);
+	}
 }
