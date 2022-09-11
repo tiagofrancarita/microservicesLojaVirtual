@@ -171,7 +171,7 @@ public class VendaCompraLojaController {
 
 		}
 	@ResponseBody
-	@DeleteMapping(value = "**/deletaTotalVenda/{idVenda}")
+	@DeleteMapping(value = "**/deletaLogicaTotalVenda/{idVenda}")
 	public ResponseEntity<String> exclusaoVendaLogica(@PathVariable(value = "idVenda") Long idVenda){
 
 		vendaService.exclusaoLogicaVenda(idVenda);
@@ -179,6 +179,7 @@ public class VendaCompraLojaController {
 		return new ResponseEntity<String>("Venda excluída com sucesso.", HttpStatus.OK);
 
 	}
+
 
 	@ResponseBody
 	@GetMapping(value = "**/consultaVendaPorProdutoId/{idProduto}")

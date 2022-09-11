@@ -12,11 +12,12 @@ import java.util.List;
 @Transactional
 public interface VendaCompraLojaVirtualRepository extends JpaRepository<VendaCompraLojaVirtual, Long> {
 
-    @Query(value = "SELECT a FROM VendaCompraLojaVirtual a  WHERE a.id = ?1 and a.excluido = false")
+    @Query(value = "SELECT a FROM VendaCompraLojaVirtual a  WHERE a.id = ?1 and a.excluido = false ")
     VendaCompraLojaVirtual findByIdExclusao(Long id);
 
-
-    @Query(value="select i.vendaCompraLojaVirtual from ItemVendaLoja i where i.vendaCompraLojaVirtual.excluido = false and i.produto.id = ?1;")
+    @Query(value="select i.vendacompralojavirtual from ItemVendaLoja i where "
+            + " i.vendacompralojavirtual.excluido = false and i.produto.id = ?1")
     List<VendaCompraLojaVirtual> vendaPorProduto(Long idProduto);
+
 
 }
